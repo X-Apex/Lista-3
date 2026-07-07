@@ -1,0 +1,30 @@
+import java.util.Scanner;
+
+public class PuntoCalidadNotas {
+    static int puntoCalidad(int promedio) {
+        if (promedio >= 90 && promedio <= 100) return 4;
+        else if (promedio >= 80) return 3;
+        else if (promedio >= 70) return 2;
+        else if (promedio >= 60) return 1;
+        else return 0;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Ingrese cantidad de notas: ");
+        int n = sc.nextInt();
+
+        int suma = 0;
+        for (int i = 1; i <= n; i++) {
+            System.out.print("Ingrese nota " + i + ": ");
+            int nota = sc.nextInt();
+            suma += nota;
+        }
+
+        int promedio = suma / n;
+        System.out.println("Promedio: " + promedio);
+        System.out.println("Punto de calidad: " + puntoCalidad(promedio));
+
+        sc.close();
+    }
+}

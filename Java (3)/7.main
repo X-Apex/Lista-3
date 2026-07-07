@@ -1,0 +1,32 @@
+import java.util.Scanner;
+
+public class InsercionVector {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Ingrese la cantidad de elementos: ");
+        int n = sc.nextInt();
+
+        int[] vector = new int[n];
+        for (int i = 0; i < n; i++) {
+            System.out.print("Elemento " + (i+1) + ": ");
+            vector[i] = sc.nextInt();
+        }
+
+        // Insertion Sort
+        for (int i = 1; i < n; i++) {
+            int clave = vector[i];
+            int j = i - 1;
+            while (j >= 0 && vector[j] > clave) {
+                vector[j+1] = vector[j];
+                j--;
+            }
+            vector[j+1] = clave;
+        }
+
+        System.out.println("Vector ordenado:");
+        for (int num : vector) {
+            System.out.print(num + " ");
+        }
+        sc.close();
+    }
+}

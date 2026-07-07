@@ -1,0 +1,34 @@
+import java.util.*;
+
+public class OrdenarParImpar {
+    public static List<Integer> ordenarParImpar(List<Integer> arr) {
+        List<Integer> pares = new ArrayList<>();
+        List<Integer> impares = new ArrayList<>();
+
+        for (int x : arr) {
+            if (x % 2 == 0) pares.add(x);
+            else impares.add(x);
+        }
+
+        Collections.sort(pares); // ascendente
+        impares.sort(Collections.reverseOrder()); // descendente
+
+        List<Integer> resultado = new ArrayList<>();
+        resultado.addAll(pares);
+        resultado.addAll(impares);
+        return resultado;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Ingrese tamaño del vector: ");
+        int n = sc.nextInt();
+        List<Integer> arr = new ArrayList<>();
+        System.out.println("Ingrese los elementos:");
+        for (int i = 0; i < n; i++) arr.add(sc.nextInt());
+
+        List<Integer> resultado = ordenarParImpar(arr);
+        System.out.println("Vector ordenado: " + resultado);
+        sc.close();
+    }
+}

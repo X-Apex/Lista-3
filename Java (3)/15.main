@@ -1,0 +1,36 @@
+import java.util.Scanner;
+
+public class MatrizSimetrica {
+    static boolean esSimetrica(int[][] matriz, int n) {
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (matriz[i][j] != matriz[j][i]) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Ingrese tamaño de la matriz: ");
+        int n = sc.nextInt();
+
+        int[][] matriz = new int[n][n];
+        System.out.println("Ingrese los elementos de la matriz:");
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                matriz[i][j] = sc.nextInt();
+            }
+        }
+
+        if (esSimetrica(matriz, n)) {
+            System.out.println("La matriz es simétrica");
+        } else {
+            System.out.println("La matriz NO es simétrica");
+        }
+
+        sc.close();
+    }
+}

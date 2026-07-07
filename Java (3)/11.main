@@ -1,0 +1,13 @@
+public class Intercambio {
+    static void intercambiar(int[] valores) {
+        int temp = valores[0];
+        valores[0] = valores[1];
+        valores[1] = temp;
+    }
+
+    public static void main(String[] args) {
+        int[] valores = {10, 20};
+        intercambiar(valores);
+        System.out.println("Después del intercambio: x = " + valores[0] + ", y = " + valores[1]);
+    }
+}
