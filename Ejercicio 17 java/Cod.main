@@ -1,0 +1,106 @@
+import java.io.*;
+import java.util.*;
+
+class Producto {
+    String nombre;
+    double precio;
+    int cantidad;
+    Producto(String n, double p, int c) { nombre=n; precio=p; cantidad=c; }
+}
+
+class Compra {
+    String nombre;
+    double precio;
+    int cantidad;
+    Compra(String n, double p, int c) { nombre=n; precio=p; cantidad=c; }
+}
+
+public class Inventario {
+    public static double aplicarDescuentoProducto(Compra c) {
+        double total = c.precio * c.cantidad;
+        if (c.precio > 300 && c.cantidad >= 2) {
+            int cantidadCobrar = (c.cantidad / 2) + (c.cantidad % 2);
+            total = cantidadCobrar * c.precio;
+        }
+        return total;
+    }
+
+    public static String generarCodigoCompra() {
+        int codigo = new Random().nextInt(100000) + 1000;
+        return "C" + codigo;
+    }
+
+    public static void main(String[] args) {
+        List<Producto> inventario = new ArrayList<>();
+        try (Scanner sc = new Scanner(new File("productos.txt"))) {
+            while (sc.hasNext()) {
+                String nombre = sc.next();
+                double precio = sc.nextDouble();
+                int cantidad = sc.nextInt();
+                inventario.add(new Producto(nombre, precio, cantidad));
+            }
+        } catch (Exception e) {
+            System.out.println("Error al abrir productos.txt");
+            return;
+        }
+
+        System.out.println("===== INVENTARIO DISPONIBLE =====");
+        for (int i = 0; i < inventario.size(); i++) {
+            Producto p = inventario.get(i);
+            System.out.printf("%d. %s | Precio: %.2f | Stock: %d%n", i+1, p.nombre, p.precio, p.cantidad);
+        }
+
+        Scanner input = new Scanner(System.in);
+        List<Compra> carrito = new ArrayList<>();
+        char opcion;
+        do {
+            System.out.print("\nIngrese el número del producto que desea comprar: ");
+            int eleccion = input.nextInt();
+            if (eleccion < 1 || eleccion > inventario.size()) {
+                System.out.println("Producto inválido.");
+                continue;
+            }
+            System.out.print("Ingrese la cantidad que desea comprar: ");
+            int cantidad = input.nextInt();
+            Producto elegido = inventario.get(eleccion-1);
+            if (cantidad > elegido.cantidad) {
+                System.out.println("No hay suficiente stock.");
+                continue;
+            }
+            carrito.add(new Compra(elegido.nombre, elegido.precio, cantidad));
+            System.out.print("¿Desea comprar otro producto? (s/n): ");
+            opcion = input.next().charAt(0);
+        } while (opcion == 's' || opcion == 'S');
+
+        System.out.print("\nIngrese el nombre del cliente: ");
+        String cliente = input.next();
+        String codigoCompra = generarCodigoCompra();
+
+        String nombreArchivo = "reporte_" + cliente + "_" + codigoCompra + ".txt";
+        try (PrintWriter reporte = new PrintWriter(new FileWriter(nombreArchivo))) {
+            reporte.printf("===== REPORTE DE COMPRA =====%n%n");
+            reporte.printf("Cliente: %s%n", cliente);
+            reporte.printf("Código de compra: %s%n%n", codigoCompra);
+
+            double totalCompra = 0;
+            for (Compra c : carrito) {
+                double subtotal = aplicarDescuentoProducto(c);
+                reporte.printf("%s | Precio: %.2f | Cantidad: %d | Subtotal: %.2f%n",
+                               c.nombre, c.precio, c.cantidad, subtotal);
+                totalCompra += subtotal;
+            }
+
+            if (totalCompra > 220) {
+                double descuento = totalCompra * 0.10;
+                totalCompra -= descuento;
+                reporte.printf("%nDescuento adicional del 10%% aplicado: -%.2f%n", descuento);
+            }
+
+            reporte.printf("%nTOTAL FINAL: %.2f%n", totalCompra);
+        } catch (Exception e) {
+            System.out.println("Error al guardar reporte.");
+        }
+
+        System.out.println("\nCompra realizada. Se generó el archivo: " + nombreArchivo);
+    }
+}

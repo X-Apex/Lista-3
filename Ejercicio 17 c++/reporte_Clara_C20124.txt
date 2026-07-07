@@ -1,0 +1,11 @@
+===== REPORTE DE COMPRA =====
+
+Cliente: Clara
+Código de compra: C20124
+
+Tablet | Precio: 1200.00 | Cantidad: 3 | Subtotal: 2400.00
+Ventilador | Precio: 300.00 | Cantidad: 6 | Subtotal: 1800.00
+
+Descuento adicional del 10% aplicado: -420.00
+
+TOTAL FINAL: 3780.00
