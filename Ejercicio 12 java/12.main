@@ -1,0 +1,29 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+public class PromedioArchivo {
+    public static void main(String[] args) {
+        double suma = 0;
+        int contador = 0;
+
+        try {
+            Scanner sc = new Scanner(new File("estudiantes.txt"));
+            while (sc.hasNext()) {
+                String nombre = sc.next();
+                double nota = sc.nextDouble();
+                suma += nota;
+                contador++;
+            }
+            sc.close();
+
+            if (contador > 0) {
+                System.out.println("Promedio general = " + (suma / contador));
+            } else {
+                System.out.println("No se encontraron datos.");
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("No se pudo abrir el archivo.");
+        }
+    }
+}
