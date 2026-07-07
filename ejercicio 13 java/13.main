@@ -1,0 +1,27 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+public class ProductosDescuento {
+    public static void main(String[] args) {
+        try {
+            Scanner sc = new Scanner(new File("productos.txt"));
+            while (sc.hasNext()) {
+                String nombre = sc.next();
+                double precio = sc.nextDouble();
+
+                if (precio > 999) {
+                    double precioFinal = precio * 0.8;
+                    System.out.println(nombre + " | Precio original: " + precio +
+                                       " | Precio con descuento: " + precioFinal);
+                } else {
+                    System.out.println(nombre + " | Precio: " + precio +
+                                       " | Sin descuento");
+                }
+            }
+            sc.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("No se pudo abrir el archivo.");
+        }
+    }
+}

@@ -1,0 +1,9 @@
+Laptop 1500
+Mouse 50
+Celular 1200
+Teclado 200
+TV 2500
+Audifonos 80
+Proyector 3000
+Cargador 45
+Cámara   89
